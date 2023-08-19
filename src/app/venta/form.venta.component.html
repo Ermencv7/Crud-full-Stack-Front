@@ -1,0 +1,28 @@
+<div>
+    <table>
+        <tr style="text-align: center;">
+            <th>Nombre</th>
+            <th>precio</th>
+            <th>Cantidad</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" pInputText [disabled]="true" [(ngModel)]="producto.nombre"/>
+            </td>
+            <td>
+                <input type="text" pInputText [disabled]="true" [(ngModel)]="producto.precio" />
+            </td>
+            <td>
+                <p-inputNumber  mode="decimal" [showButtons]="true" (onInput)="operacion($event.value)" inputId="minmax-buttons" [min]="0" [max]='producto.unidad'> </p-inputNumber>
+               
+            </td>
+
+        </tr>
+        <tr>
+            <th style="text-align: right;" colspan="2">Total</th>
+            <td style="text-align:center;">{{valorTotal}}</td>
+        </tr>
+    </table>
+   
+    <button (click)="confirmar()" class="btn btn-primary">Confirmar</button>
+</div>

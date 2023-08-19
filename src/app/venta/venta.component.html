@@ -1,0 +1,39 @@
+<p-dialog [(visible)]="visible" [header]="'Historial'" [position]="'top'" [style]="{ width: '50vw' }" >
+<app-venta-historial [historialVentas]="historialVentas"></app-venta-historial>
+</p-dialog>
+<p-table
+    [value]="ventas"
+    [paginator]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+>
+    <ng-template pTemplate="header">
+        <tr style="text-align:center;">
+            <th style="width:10%">Producto</th>
+            <th style="width:10%">Hata la Fecha</th>
+            <th style="width:10%">Cantidad</th>
+            <th style="width:15%">valor Unitario</th>
+            <th style="width:15%">valorTotal</th>
+            <th style="width:15%">Historial</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr style="text-align:center;">
+            <td>{{ customer.producto }}</td>
+            <td>{{ customer.fecha }}</td>
+            <td>{{ customer.cantidad }}</td>
+            <td>{{customer.valorUnitario}}</td>
+            <td>{{customer.valorTotal}}</td>
+            <td><button (click)="estadoVisible(customer.producto)" class="btn btn-secondary">Historial</button></td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-table>

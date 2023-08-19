@@ -1,0 +1,40 @@
+<p-table
+    [value]="historialVentas"
+    [paginator]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:25%">Producto</th>
+            <th style="width:10%">Fecha</th>
+            <th style="width:10%">Hora</th>
+            <th style="width:10%">Cantidad</th>
+            <th style="width:15%">valorTotal</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td>{{ customer.producto }}</td>
+            <td>{{ customer.fecha }}</td>
+            <td>{{ customer.hora }}</td>
+            <td>{{ customer.cantidad }}</td>
+            <td>{{customer.valorTotal}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+       <tr>
+            <th>Total</th> <tr>
+            <td>{{total}}</td>
+       </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-table>

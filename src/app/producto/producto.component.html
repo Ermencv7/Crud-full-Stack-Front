@@ -1,0 +1,77 @@
+<div>
+    <div class="div-header div-buscar">
+
+        <button (click)="show()" class="btn btn-success">Registrar[+]</button>
+       
+        <div style="display: flex;gap: 10px;">
+
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText (input)="onclick()" id="input" name="input" />
+            </span>
+
+            <div class="div-producto-length"><i class="bi bi-clipboard-check pdf"></i>
+                <p class="productos-length">{{productos?.length}}</p>
+            </div>
+
+        </div>
+
+
+        <div class="div-pdf">
+
+            <button (click)="pdf()" class="btn btn-light"><i class="bi bi-filetype-pdf pdf"></i></button>
+
+            <a [routerLink]="['/ventas']" class="link-ventas"><i
+                    class="bi bi-currency-dollar i-ventas"></i>Ventas</a>
+
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr style="text-align: center;">
+                <th>id</th>
+                <th>nombre</th>
+                <th>precio</th>
+                <th>categoria</th>
+                <th>unidad</th>
+                <th>vender</th>
+                <th>actualizar</th>
+                <th>eliminar</th>
+                <th>Mas detalles</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr style="text-align: center;" *ngFor="let p of productos">
+                <td>{{p.id}}</td>
+                <td id="pre">{{p.nombre}}</td>
+                <td>{{p.precio}}</td>
+                <td>{{p.categoria.categoriaNombre}}</td>
+                <td>{{p.unidad}}</td>
+                <td><button *ngIf="p.unidad" class="btn btn-success" (click)="vender(p)">vender</button></td>
+                <td><button class="btn btn-warning" (click)="getProducto(p.id)">Editar</button></td>
+                <td><button (click)="eliminar(p)" class="btn btn-danger" value={{p.id}}>Eliminar</button></td>
+                <td><button class="btn btn-outline-info" value={{p.id}}><i class="bi bi-info-circle pdf"></i></button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <p-sidebar  [(visible)]="visible" [position]="'left'" (onHide)="hide()"  [style]="{ width: '40vw' }">
+        
+        <div style="text-align: center;width: 100%;margin-bottom: 30px;">
+            <h3>Registro de Productos</h3>
+        </div>
+        <app-form-producto  class="form-producto" [producto]="formProducto" [categoria]="categoria" (outputEmiter)="getvisible($event)" ></app-form-producto>
+    </p-sidebar>
+
+    <p-dialog  [(visible)]="visibleDialog" header="Formulario" [(visible)]="visibleDialog" [position]="'top'"
+        [style]="{ width: '50vw' }">
+        <app-form-venta (outputVisibleDialg)="ngOnInit()" (outputProductos)="productos=$event" [producto]="producto"
+            (outputVisibleDialg)="visibleDialog=$event"></app-form-venta>
+    </p-dialog>
+
+</div>
