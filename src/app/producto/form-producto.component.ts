@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Categoria, Producto } from './producto';
 import { ProductoService } from './producto.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -10,25 +10,22 @@ import swal from 'sweetalert2';
   styleUrls: ['./form-producto.component.css']
 })
 export class FormProductoComponent  implements OnInit {
-
-  @Output()
-  outputEmiter=new EventEmitter<boolean>();
-
-  @Input()
+ 
   public producto:Producto=new Producto();
   
-  @Input()
   public categoria:Categoria=new Categoria();
 
   public categorias:Categoria[];
 
   public errors:String[]
   
-  constructor(private service:ProductoService,private router:Router){
+  constructor(private service:ProductoService,private router:Router
+    ,private activateRoute:ActivatedRoute){
 
   }
   ngOnInit(): void {
     this.getCategorias();
+    this.cargarProducto();
   }
 
   guardar():void{
@@ -37,8 +34,7 @@ export class FormProductoComponent  implements OnInit {
 
     this.service.guardarProducto(this.producto).subscribe(
       response=>{
-        this.visible()
-        this.router.navigate[("/producto")]
+        this.router.navigate(['/producto'])
         swal("Registro","Exito al registrar el producto","success")
       },
       err=>{
@@ -58,14 +54,26 @@ export class FormProductoComponent  implements OnInit {
 
   actualiza(id:number){
     this.service.actualizar(id,this.producto).subscribe( response=>{
-      this.visible()
-      this.router.navigate[("/producto")]
+      this.router.navigate(['/producto'])
+      swal("Bien","Se actualizo Correcta mente","success")
+    },
+    err=>{
+      this.errors=err.error.errors as string[];
+      console.error('Codigó del error desde el backend: '+err.status)
+      console.error(err.error.errors)
     })
   }
 
-  visible(){
-    this.outputEmiter.emit(false);
+  cargarProducto(){
+  this.activateRoute.params.subscribe(parms=>{
+    let id =parms['id']
+    if(id){
+      this.service.buscarPorId(id).subscribe(producto=>{
+        this.producto=producto
+        this.categoria=this.producto.categoria
+      })
+    }
+  })
   }
 
- 
 }

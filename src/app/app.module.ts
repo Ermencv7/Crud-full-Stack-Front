@@ -29,8 +29,10 @@ import { provideToastr } from 'ngx-toastr';
 const routes:Routes=[
   {path:'',redirectTo:'/producto',pathMatch:'full'},
   {path:'producto',component:ProductoComponent},
-  {path:'formulario',component:FormProductoComponent},
+  {path:'producto/formulario',component:FormProductoComponent},
+  {path:'producto/formulario/:id',component:FormProductoComponent},
   {path:'ventas',component:VentaComponent}
+
   
 ]
 

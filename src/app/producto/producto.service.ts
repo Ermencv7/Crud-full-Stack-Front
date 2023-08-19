@@ -37,7 +37,16 @@ export class ProductoService {
   }
 
   actualizar(id:number,producto:Producto):Observable<Producto>{
-    return this.http.put<Producto>("http://localhost:8080/api/producto/"+id,producto,{headers:this.httpHeaders})
+    return this.http.put<Producto>("http://localhost:8080/api/producto/"+id,producto,{headers:this.httpHeaders}).pipe(
+      catchError(e=>{
+        if(e.status=400){
+          console.log("hola error")
+          return throwError(e);
+        }
+        return throwError(e);
+      })
+
+    )
 
   }
 
